@@ -33,6 +33,7 @@ module.exports = (function() {
 
   const V1TweetsController = Nodal.require('app/controllers/v1/tweets_controller.js');
   const UsersController = Nodal.require('app/controllers/users_controller.js');
+  const V1AccessTokensController = Nodal.require('app/controllers/v1/access_tokens_controller.js');
 
   /* generator: end imports */
 
@@ -42,6 +43,7 @@ module.exports = (function() {
 
   router.route('/v1/tweets/{id}').use(V1TweetsController);
   router.route('/users/{id}').use(UsersController);
+  router.route('/v1/access_tokens/{id}').use(V1AccessTokensController);
 
   /* generator: end routes */
 

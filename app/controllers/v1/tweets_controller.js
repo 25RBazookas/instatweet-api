@@ -5,7 +5,9 @@ module.exports = (function() {
   const Nodal = require('nodal');
   const Tweet = Nodal.require('app/models/tweet.js');
 
-  class V1TweetsController extends Nodal.Controller {
+  const AuthController = Nodal.require('app/controllers/auth_controller')
+
+  class V1TweetsController extends AuthController {
 
     index() {
 
@@ -32,12 +34,19 @@ module.exports = (function() {
 
     create() {
 
-      Tweet.create(this.params.body, (err, model) => {
+      this.authorize((err, accessToken, user)=>{
+        if (err) {
+          return this.respond(err);
+        }
 
-        this.respond(err || model);
+        this.params.body.data.user_id = user.get('id');
 
+        Tweet.create(this.params.body.data, (err, model) => {
+
+          this.respond(err || model);
+
+        });
       });
-
     }
 
     update() {
